@@ -6,7 +6,7 @@ import { Webhook } from "svix";
 const clerkWebhooks = async (req, res) => {
     try {
         //Create a svix instance with clerk webhook secret
-        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
+        const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
         
         //Getting Headers
         const headers = {
@@ -15,7 +15,7 @@ const clerkWebhooks = async (req, res) => {
             "svix-signature": req.headers["svix-signature"],
         };
         //Verifying Headers
-        await whook.verify(JSON.stringify(req.body), headers);
+        await webhook.verify(JSON.stringify(req.body), headers);
 
         //Getting data from request body
         const{data, type}= req.body
@@ -53,3 +53,5 @@ const clerkWebhooks = async (req, res) => {
         res.json({success:false, message:error.message})
     }
 }
+
+export default clerkWebhooks;
